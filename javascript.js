@@ -1,10 +1,44 @@
 const choices = ["Rock", "Paper", "Scissors"];
 
 
+const buttons = document.querySelectorAll('button');
+
+const div = document.querySelector('div');
+const playerChoice = document.createElement('p');
+const computerChoise = document.createElement('p');
+const playerScore = document.createElement('p');
+const computerScore = document.createElement('p');
+const winner = document.createElement('p');
+
+
+playerChoice.textContent = `players choice:`;
+computerChoise.textContent = `computers choice:`;
+playerScore.textContent = 'players score: 0';
+computerScore.textContent = 'computers score: 0';
+
+
+
+div.appendChild(playerChoice);
+div.appendChild(computerChoise);
+div.appendChild(playerScore);
+div.appendChild(computerScore);
+
+
+
+buttons.forEach((button) => {
+    let val = button.value;
+    console.log(val);
+    button.addEventListener('click', () => {
+        playSingleRound(val, getComputerChoise());
+    });
+})
+
+
 function playSingleRound(playerSelection, computerSelection){
 
+    playerChoice.textContent = `players choice: ${playerSelection}`;
+    computerChoise.textContent = `computers choice: ${computerSelection}`;
     
-
     if (playerSelection === computerSelection) {
         return "Draw";
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
@@ -24,19 +58,7 @@ function game(){
     let playerScore = 0;
     let computerScore = 0;
 
-    for (let index = 0; index < 5; index++) {
-        let playerSelection = prompt("Choose your weapon","").toLowerCase();
-        let playerFirstLetter = playerSelection.charAt(0).toUpperCase();
-        let computerSelection = getComputerChoise();
-        playerSelection = playerFirstLetter + playerSelection.slice(1);
-        let temp = playSingleRound(playerSelection, computerSelection)
-        console.log(temp);
-        if (temp.match("You Win!")) {
-            playerScore += 1;
-        } else if (temp.match("You Lose!")) {
-            computerScore += 1;
-        } 
-    }
+    
 
     if (playerScore === computerScore) {
         console.log("Draw");
@@ -52,8 +74,7 @@ function getComputerChoise(){
 }
 
 function getRandomChoice(){
-    return Math.floor(Math.random() * choices.length)
+    return Math.floor(Math.random() * choices.length);
 }
 
 
-game();
