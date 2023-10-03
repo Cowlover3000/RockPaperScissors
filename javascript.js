@@ -9,7 +9,8 @@ const computerChoise = document.createElement('p');
 const playerScore = document.createElement('p');
 const computerScore = document.createElement('p');
 const winner = document.createElement('p');
-
+let playerPoints = 0;
+let computerPoints = 0;
 
 playerChoice.textContent = `players choice:`;
 computerChoise.textContent = `computers choice:`;
@@ -22,7 +23,7 @@ div.appendChild(playerChoice);
 div.appendChild(computerChoise);
 div.appendChild(playerScore);
 div.appendChild(computerScore);
-
+div.appendChild(winner);
 
 
 buttons.forEach((button) => {
@@ -36,37 +37,47 @@ buttons.forEach((button) => {
 
 function playSingleRound(playerSelection, computerSelection){
 
+    
+
     playerChoice.textContent = `players choice: ${playerSelection}`;
     computerChoise.textContent = `computers choice: ${computerSelection}`;
     
     if (playerSelection === computerSelection) {
-        return "Draw";
+        winner.textContent = 'Draw';
+        playerPoints += 1;
     } else if (playerSelection === "Rock" && computerSelection === "Scissors") {
-        return "You Win! Rock beats Scissors";
+        winner.textContent = "You Win! Rock beats Scissors";
+        playerPoints += 1;
     } else if (playerSelection === "Paper" && computerSelection === "Rock"){
-        return "You Win! Paper beats Rock";
+        winner.textContent = "You Win! Paper beats Rock";
+        playerPoints += 1;
     } else if (playerSelection === "Scissors" && computerSelection === "Paper")
     {
-        return "You Win! Scissors beats Paper";
+        winner.textContent = "You Win! Scissors beats Paper";
+        playerPoints += 1;
     } else {
-        return `You Lose! ${computerSelection} beats ${playerSelection}`
+        winner.textContent = `You Lose! ${computerSelection} beats ${playerSelection}`
+        computerPoints += 1;
+    }
+    playerScore.textContent = `players score: ${playerPoints}`;
+    computerScore.textContent = `computers score: ${computerPoints}`;
+
+    if (playerPoints == 5 || computerPoints == 5) {
+        getWinner(playerPoints, computerPoints);
     }
 }
 
-function game(){
-    
-    let playerScore = 0;
-    let computerScore = 0;
-
-    
+function getWinner(playerScore, computerScore){
 
     if (playerScore === computerScore) {
-        console.log("Draw");
+        winner.textContent = "It's a Draw";
     } else if (playerScore > computerScore) {
-        console.log(`You Are the winner with a score of ${playerScore}`);
+        winner.textContent = `You Are the winner!!!`;
     } else {
-        console.log("You Lose!!");
+        winner.textContent = "You Lose!!";
     }
+
+    buttons.forEach((button) => button.disabled = true)
 }
 
 function getComputerChoise(){
